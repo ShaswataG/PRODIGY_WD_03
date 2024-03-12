@@ -1,0 +1,25 @@
+.grid {
+    margin: 00 auto;
+    width: 200px;
+    height: 200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.restart-button {
+    margin: 10px;
+    width: 100px;
+    height: 30px;
+    font-size: 23px;
+}
