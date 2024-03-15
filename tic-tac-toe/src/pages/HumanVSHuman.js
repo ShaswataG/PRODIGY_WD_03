@@ -12,11 +12,9 @@ export default function Game() {
     const [completed, setCompleted] = React.useState(false)
     const [draw, setDraw] = React.useState(false)
 
-    console.log(boxes)
-
     function handleClick(event) {
         setRunning(true)
-        // if (event.target.clicked === false) {
+        if (!completed) {
             setBoxes(prevBoxes => {
                 const newArray = []
                 for (let i = 0; i < prevBoxes.length; i++) {
@@ -33,21 +31,24 @@ export default function Game() {
                 return newArray
             })
             setCurrPlayer(prevCurrPlayer => !prevCurrPlayer)
-        // } 
+        }
     }
 
     function newGame() {
         setCompleted(false)
+        setDraw(false)
         setBoxes(prevBoxes => {
             const newArray = []
             for (let i = 0; i < prevBoxes.length; i++) {
                 newArray.push({
                     ...prevBoxes[i],
-                    player: ""
+                    player: "",
+                    clicked: false
                 })
             }
             return newArray
         })
+        console.log(draw)
     }
 
     React.useEffect(() => {
@@ -61,7 +62,8 @@ export default function Game() {
         if (flag === true) {
             setDraw(true)
         }
-        if ((boxes[0].player != '' && boxes[0].player === boxes[1].player && boxes[1].player=== boxes[2].player) || 
+        if (!completed) {
+            if ((boxes[0].player != '' && boxes[0].player === boxes[1].player && boxes[1].player=== boxes[2].player) || 
             (boxes[3].player != '' && boxes[3].player === boxes[4].player && boxes[4].player === boxes[5].player) ||
             (boxes[6].player != '' && boxes[6].player === boxes[7].player && boxes[7].player === boxes[8].player) ||
             (boxes[0].player != '' && boxes[0].player === boxes[4].player &&  boxes[4].player === boxes[8].player) ||
@@ -77,6 +79,7 @@ export default function Game() {
             setRunning(false)
             setCompleted(true)
         }
+        }
     }, [boxes])
 
     console.log(winner + " won")
@@ -87,16 +90,16 @@ export default function Game() {
 
     return (
         <div className="container">
-            {completed && <Confetti  />}
-            <h1>Human v/s Human</h1>
+            {completed && <Confetti  height="800px" />}
+            <h1>Tic Tac Toe</h1>
             <section className="grid">
                 {options}  
             </section>
             <section>
                 <button className="restart-button" onClick={newGame}>Restart</button>
             </section>
+            {(draw && !completed) && <h1>Draw</h1>}
             {completed && <h1>{winner} won</h1>}
-            {draw && <h1>Draw</h1>}
         </div>
     )
 }
